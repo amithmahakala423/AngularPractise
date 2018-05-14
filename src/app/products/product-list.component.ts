@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IProduct } from './product';
+import { ProductService } from './product.service';
 
 @Component({
   selector: 'pm-products',
@@ -16,6 +17,7 @@ export class ProductListComponent implements OnInit{
 
     _listFilter: string;
 
+
     set listFilter(value: string){
         this._listFilter = value;
         this.filteredProducts = this.listFilter ? this.performFilter(this.listFilter): this.products;
@@ -26,32 +28,14 @@ export class ProductListComponent implements OnInit{
 
     }
 
+    onRatingClicked(message: string): void{
+        this.pageTitle = "Product List: " + message;
+    }
+
 
     filteredProducts: IProduct[];
 
-    products: IProduct[] = [
-    
-           {
-                "productId": 1,
-                "productName": "Leaf Rake",
-                "productCode": "GDN-0011",
-                "releaseDate": "March 19, 2016",
-                "description": "Leaf rake with 48-inch wooden handle.",
-                "price": 19.95,
-                "starRating": 3.2,
-                "imageUrl": "https://wepushbuttons.com.au/wp-content/uploads/2012/03/twitter-logo-small.jpg"
-            },
-            {
-                "productId": 2,
-                "productName": "Garden Cart",
-                "productCode": "GDN-0023",
-                "releaseDate": "March 18, 2016",
-                "description": "15 gallon capacity rolling garden cart",
-                "price": 32.99,
-                "starRating": 4.2,
-                "imageUrl": "https://wepushbuttons.com.au/wp-content/uploads/2012/03/twitter-logo-small.jpg"
-            }
-    ]; 
+    products: IProduct[]; 
 
     toggleImage() : void{
         this.showImage = !this.showImage;
@@ -59,6 +43,9 @@ export class ProductListComponent implements OnInit{
 
     ngOnInit(): void{
         console.log("In Init funciton of ngInit")
+        this.products = this._productService.getProducts();
+        this.filteredProducts = this.products;
+
     }
 
     performFilter(filterBy: string): IProduct[] {
@@ -67,8 +54,6 @@ export class ProductListComponent implements OnInit{
             product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1);
     }
 
-    constructor() {
-        this.filteredProducts = this.products;
-        this.listFilter = "cart";
+    constructor(private _productService: ProductService) {
     }
 }
