@@ -1,0 +1,28 @@
+<div class = "panel panel-primary">
+  <div class = "panel-heading">
+     {{pageTitle + ': ' + product.productName}}
+  </div>
+  <div class= "container-fluid">
+    <div class= "row-fluid ">
+      <div class = "col-sm-4">
+          <ul>
+              <li>{{'ProductId' + ': ' + product.productId}}</li>
+              <li>{{'ProductName' + ': ' + product.productName}}</li>
+              <li>{{'ProductCode' + ': ' + product.productCode}}</li>
+              <li>{{'Release Date' + ': ' + product.releaseDate}}</li>
+              <li>{{'Description' + ': ' + product.description}}</li>
+              <li>{{'price' + ': ' + product.price}}</li>
+              <li>{{'starRating' + ': ' + product.starRating}}</li>
+            </ul>
+      </div>
+      <div class = "col-sm-8">
+          <span><img [src]= 'product.imageUrl'></span>
+      </div>   
+    </div>
+  </div>
+  <div class = "panel-footer">
+    <a class = 'btn btn-default' (click)= 'onBack()' style = 'width:80px'>
+      <i class = 'glyphicon glyphicon-chevron-left'></i> Back
+    </a>
+  </div>
+</div>
