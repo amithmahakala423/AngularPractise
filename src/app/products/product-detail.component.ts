@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {IProduct} from './product';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProductService } from './product.service';
 
 @Component({
   selector: 'pm-product-detail',
@@ -10,8 +11,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProductDetailComponent implements OnInit {
   pageTitle: string = "Product Detail";
   product: IProduct;
+  products: IProduct[]; 
+  errorMessage: string;
+  product1: any;
+  id: string;
+  filteredProducts: IProduct[];
 
-  constructor(private _route : ActivatedRoute, private _router: Router) {
+  constructor(private _route : ActivatedRoute, private _router: Router, private _productService: ProductService) {
     console.log(this._route.snapshot.paramMap.get('id'));
    }
 
@@ -21,16 +27,15 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit() {
     let id = +this._route.snapshot.paramMap.get('id');
     this.pageTitle += `: ${id}`;
-    this.product = {
-        "productId": 1,
-        "productName": "Leaf Rake",
-        "productCode": "GDN-0011",
-        "releaseDate": "March 19, 2016",
-        "description": "Leaf rake with 48-inch wooden handle.",
-        "price": 19.95,
-        "starRating": 3.2,
-        "imageUrl": "https://www.gstatic.com/webp/gallery/1.sm.jpg"
-    }
+    this.id = `${id}`;
+    this._productService.getProducts().subscribe(products =>{
+          this.products = products, 
+          this.filteredProducts = this.products;
+        },
+          error => this.errorMessage = <any>error,
+        );
+
+        console.log("All products once again" + JSON.stringify(this.filteredProducts));
   }
 
 }

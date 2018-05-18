@@ -1,11 +1,12 @@
-<div class = "panel panel-primary">
+<div class = "panel panel-primary" >
   <div class = "panel-heading">
-     {{pageTitle + ': ' + product.productName}}
+     {{pageTitle}}
   </div>
-  <div class= "container-fluid">
+  <div class= "container-fluid" *ngFor = 'let product of filteredProducts'>
     <div class= "row-fluid ">
-      <div class = "col-sm-4">
-          <ul>
+      <div class = "col-sm-9">
+        <div>
+          <ul *ngIf = 'id == product.productId' >
               <li>{{'ProductId' + ': ' + product.productId}}</li>
               <li>{{'ProductName' + ': ' + product.productName}}</li>
               <li>{{'ProductCode' + ': ' + product.productCode}}</li>
@@ -13,11 +14,10 @@
               <li>{{'Description' + ': ' + product.description}}</li>
               <li>{{'price' + ': ' + product.price}}</li>
               <li>{{'starRating' + ': ' + product.starRating}}</li>
+              <li><img [src]= 'product.imageUrl'></li>
             </ul>
-      </div>
-      <div class = "col-sm-8">
-          <span><img [src]= 'product.imageUrl'></span>
-      </div>   
+          </div>
+      </div>  
     </div>
   </div>
   <div class = "panel-footer">
